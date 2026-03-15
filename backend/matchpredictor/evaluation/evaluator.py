@@ -16,7 +16,7 @@ class Evaluator(object):
         correct_predictions = sum([self.__is_correct(m) for m in results])
         time_elapsed = time.time() - start_time
 
-        return correct_predictions / len(results), time_elapsed
+        return correct_predictions / len(results) if len(results) > 0 else 0.33, time_elapsed
 
     def __is_correct(self, result: Result) -> bool:
         prediction = self.predictor.predict(result.fixture)

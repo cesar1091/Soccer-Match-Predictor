@@ -10,7 +10,7 @@ help:
 .PHONY: backend/install
 backend/install:
 	cd backend; \
-	python3 -m venv env; \
+	python3.11 -m venv env; \
 	source env/bin/activate; \
 	pip install -r requirements.txt; \
 
@@ -24,26 +24,26 @@ backend/types:
 backend/test: backend/types
 	cd backend; \
 	source env/bin/activate; \
-	python -m unittest; \
+	python3.11 -m unittest; \
 
 .PHONY: backend/measure
 backend/measure:
 	cd backend; \
 	source env/bin/activate; \
-	python -m unittest discover -p "measure_*.py"; \
+	python3.11 -m unittest discover -p "measure_*.py"; \
 
 .PHONY: backend/report
 backend/report:
 	cd backend; \
 	source env/bin/activate; \
-	python report.py; \
+	python3.11 report.py; \
 
 .PHONY: backend/run
 backend/run:
 	cd backend; \
-	source env/bin/activate; \
+	source env/bin/activate; \cd
 	source .env; \
-	python -m matchpredictor; \
+	python3.11 -m matchpredictor; \
 
 .PHONY: frontend/lint
 frontend/lint:

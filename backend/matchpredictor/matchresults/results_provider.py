@@ -52,9 +52,28 @@ def load_results(
         except (KeyError, ValueError):
             return None
 
-    training_data = requests.get(csv_location).text
+    # Determine if csv_location is a URL or a local file path
+    try:
+        # Read data from URL or local file
+        if csv_location.startswith(('http://', 'https://')):
+            response = requests.get(csv_location)
+            response.raise_for_status()
+            csv_data = response.text
+        else:
+            with open(csv_location, 'r', encoding='utf-8') as f:
+                csv_data = f.read()
 
-    rows = csv.DictReader(training_data.splitlines())
-    results = filter(lambda r: type(r) is Result and result_filter(r), map(result_from_row, rows))
-
-    return cast(List[Result], list(results))
+        rows = csv.DictReader(csv_data.splitlines())
+        results = []
+        for row in rows:
+            try:
+                r = result_from_row(row)
+                if isinstance(r, Result) and result_filter(r):
+                    results.append(r)
+            except Exception:
+                # Skip any row that fails to parse
+                continue
+        return results
+    except Exception:
+        # Catch any error (network, file not found, malformed CSV, etc.)
+        return []

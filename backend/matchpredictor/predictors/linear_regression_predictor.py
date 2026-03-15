@@ -49,7 +49,7 @@ def build_model(results: List[Result]) -> Tuple[LogisticRegression, OneHotEncode
     away_goals = np.array([r.away_goals for r in results])
 
     team_names = np.array(list(home_names) + list(away_names)).reshape(-1, 1)
-    team_encoding = OneHotEncoder(sparse=False).fit(team_names)
+    team_encoding = OneHotEncoder(sparse_output=False).fit(team_names)
 
     encoded_home_names = team_encoding.transform(home_names.reshape(-1, 1))
     encoded_away_names = team_encoding.transform(away_names.reshape(-1, 1))
