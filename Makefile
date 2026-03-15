@@ -9,10 +9,13 @@ help:
 
 .PHONY: backend/install
 backend/install:
+	sudo add-apt-repository ppa:deadsnakes/ppa
+	sudo apt update
+	sudo apt install python3.10 python3.10-venv python3.10-dev
 	cd backend; \
-	python -m venv env; \
+	python3.10 -m venv env; \
 	source env/bin/activate; \
-	pip install -r requirements.txt; \
+	python3.10 -m pip install -r requirements.txt; \
 
 .PHONY: backend/types
 backend/types:
@@ -24,26 +27,26 @@ backend/types:
 backend/test: backend/types
 	cd backend; \
 	source env/bin/activate; \
-	python -m unittest; \
+	python3.10 -m unittest; \
 
 .PHONY: backend/measure
 backend/measure:
 	cd backend; \
 	source env/bin/activate; \
-	python -m unittest discover -p "measure_*.py"; \
+	python3.10 -m unittest discover -p "measure_*.py"; \
 
 .PHONY: backend/report
 backend/report:
 	cd backend; \
 	source env/bin/activate; \
-	python report.py; \
+	python3.10 report.py; \
 
 .PHONY: backend/run
 backend/run:
 	cd backend; \
 	source env/bin/activate; \
 	source .env; \
-	python -m matchpredictor; \
+	python3.10 -m matchpredictor; \
 
 .PHONY: frontend/lint
 frontend/lint:
