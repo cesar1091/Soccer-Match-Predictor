@@ -13,7 +13,7 @@ def require_env(name: str) -> str:
 port = os.environ.get('PORT', 5001)
 
 app_environment = AppEnvironment(
-    csv_location=os.environ.get('CSV_LOCATION', 'https://web.archive.org/web/20250306125411/https://projects.fivethirtyeight.com/soccer-api/club/spi_matches.csv'),
+    csv_location=require_env('CSV_LOCATION'),
     season=2023,
     football_data_api_key=require_env('FOOTBALL_DATA_API_KEY'),
 )
